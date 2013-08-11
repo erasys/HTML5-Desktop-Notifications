@@ -39,7 +39,7 @@
              *
              * Also, we canNOT detect if msIsSiteMode method exists, as it is
              * a method of host object. In IE check for existing method of host
-             * object returns undefined. So, we try to run it - if it runs 
+             * object returns undefined. So, we try to run it - if it runs
              * successfully - then it is IE9+, if not - an exceptions is thrown.
              */
             try {
@@ -78,13 +78,16 @@
                     The notification’s unique identifier.
                     This prevents duplicate entries from appearing if the user has multiple instances of your website open at once.
                 */
-                tag: options.tag || emptyString
+                tag: options.tag || emptyString,
             });
+            notification.onclick = options.onclick;
         } else if (win.webkitNotifications) { /* FF with html5Notifications plugin installed */
             notification = win.webkitNotifications.createNotification(options.icon, title, options.body);
+            notification.onclick = options.onclick;
             notification.show();
         } else if (navigator.mozNotification) { /* Firefox Mobile */
             notification = navigator.mozNotification.createNotification(title, options.body, options.icon);
+            notification.onclick = options.onclick;
             notification.show();
         } else if (win.external && win.external.msIsSiteMode()) { /* IE9+ */
             //Clear any previous notifications
@@ -119,7 +122,7 @@
         if (win.webkitNotifications && win.webkitNotifications.checkPermission) {
             /*
              * Chrome 23 supports win.Notification.requestPermission, but it
-             * breaks the browsers, so use the old-webkit-prefixed 
+             * breaks the browsers, so use the old-webkit-prefixed
              * win.webkitNotifications.checkPermission instead.
              *
              * Firefox with html5notifications plugin supports this method
@@ -152,7 +155,7 @@
         return permission;
     }
     /**
-     *  
+     *
      */
     function config(params) {
         if (params && isObject(params)) {
